@@ -51,8 +51,11 @@ function getFizzBuzz(num) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  if (n <= 1) {
+    return 1;
+  }
+  return n * getFactorial(n - 1);
 }
 
 
@@ -292,8 +295,22 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const str = String(ccn);
+  const lastDigit = +str.slice(-1);
+  const str2 = str.slice(0, -1);
+  const arr = str2.split('').reverse().map((el) => Number(el));
+  const sum = arr.reduce((acc, el, index) => {
+    if (index % 2 === 0) {
+      if (el * 2 > 9) {
+        return ((el * 2) % 9 || 9) + acc;
+      }
+      return el * 2 + acc;
+    }
+    return acc + el;
+  }, 0);
+  const res = sum + +lastDigit;
+  return res % 10 === 0;
 }
 
 /**
@@ -310,8 +327,8 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  return num % 9 || 9;
 }
 
 
@@ -336,8 +353,29 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const arr = str.split('');
+  const openBrackets = ['(', '{', '[', '<'];
+  const bracketsPairs = {
+    '(': ')',
+    '{': '}',
+    '[': ']',
+    '<': '>',
+  };
+  const stack = [];
+  for (let i = 0; i < arr.length; i += 1) {
+    const symbol = arr[i];
+    if (openBrackets.includes(symbol)) {
+      stack.push(symbol);
+    } else if (!stack.length) {
+      return false;
+    } else if (bracketsPairs[stack[stack.length - 1]] === symbol) {
+      stack.pop();
+    } else {
+      return false;
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -361,8 +399,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -436,8 +474,22 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  if (position[0][0] && position[0][0] === position[1][1] && position[1][1] === position[2][2]) {
+    return position[2][2];
+  }
+  if (position[0][2] && position[0][2] === position[1][1] && position[1][1] === position[2][0]) {
+    return position[1][1];
+  }
+  for (let i = 0; i < 3; i += 1) {
+    if (position[i][0] && position[i][0] === position[i][1] && position[i][1] === position[i][2]) {
+      return position[i][2];
+    }
+    if (position[0][i] && position[0][i] === position[1][i] && position[1][i] === position[2][i]) {
+      return position[1][i];
+    }
+  }
+  return undefined;
 }
 
 
