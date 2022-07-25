@@ -52,10 +52,11 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-  if (n <= 1) {
-    return 1;
+  let result = 1;
+  for (let i = 0; i < n; i += 1) {
+    result *= i + 1;
   }
-  return n * getFactorial(n - 1);
+  return result;
 }
 
 
@@ -377,7 +378,6 @@ function isBracketsBalanced(str) {
   }
   return stack.length === 0;
 }
-
 
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
